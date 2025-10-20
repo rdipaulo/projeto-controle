@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1tztgcRdr9uJPMF4txD9BsRyoimZeZm4HYv3lmf8Tfs=",
+  "Source": "BettingControl.API",
+  "BasePath": "_content/BettingControl.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

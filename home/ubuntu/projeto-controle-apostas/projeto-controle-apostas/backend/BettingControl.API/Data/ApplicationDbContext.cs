@@ -45,6 +45,10 @@ namespace BettingControl.API.Data
                 .HasOne(fm => fm.User)
                 .WithMany()
                 .HasForeignKey(fm => fm.UserId);
+            modelBuilder.Entity<Bet>()
+                .Property(b => b.ValorApostado)
+                .HasPrecision(18, 2);
+
         }
     }
 }

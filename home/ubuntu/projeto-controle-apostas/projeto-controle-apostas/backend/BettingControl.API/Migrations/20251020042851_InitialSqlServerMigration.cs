@@ -152,6 +152,12 @@ namespace BettingControl.API.Migrations
                 name: "IX_HistoricoBancas_UserId",
                 table: "HistoricoBancas",
                 column: "UserId");
+            migrationBuilder.AddColumn<DateTime>(
+                name: "CreatedAt",
+                table: "Users",
+                nullable: false,
+                defaultValueSql: "GETDATE()");
+
         }
 
         /// <inheritdoc />

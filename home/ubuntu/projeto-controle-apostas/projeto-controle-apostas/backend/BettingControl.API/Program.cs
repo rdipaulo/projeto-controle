@@ -1,6 +1,6 @@
 using BettingControl.API.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.Sqlite; // Adicionar para SQLite
+// using Microsoft.Data.Sqlite; // Removido para usar SQL Server
 // Usings necessários para JWT e Autenticação
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,12 +15,23 @@ var builder = WebApplication.CreateBuilder(args);
 // -----------------------------------------------------------
 
 // Adiciona suporte a Controllers (essencial para AuthController, BetsController, CiclosController)
-builder.Services.AddControllers(); 
+builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:5173" )
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+}); 
 
 // Registro do DbContext (Entity Framework Core)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=BettingControl.db"; // Fallback para SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString)
+    options.UseSqlServer(connectionString)
 );
 
 // Registro do serviço de senha (já existente)
@@ -80,6 +91,8 @@ if (app.Environment.IsDevelopment())
 // Middlewares de Autenticação e Autorização (DEVE vir antes de MapControllers)
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("AllowSpecificOrigin");
 
 // Mapeamento dos Controllers
 app.MapControllers(); 
